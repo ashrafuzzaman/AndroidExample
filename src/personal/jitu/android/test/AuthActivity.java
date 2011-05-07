@@ -17,7 +17,6 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 public class AuthActivity extends Activity {
-	private String authToken;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -40,10 +39,10 @@ public class AuthActivity extends Activity {
 	}
 
 	private String getToken() throws OperationCanceledException, AuthenticatorException, IOException {
-		AccountManager mgr = AccountManager.get(this);
-		Account[] accts = mgr.getAccountsByType("com.google");
-		Account acct = accts[0];
-		AccountManagerFuture<Bundle> accountManagerFuture = mgr.getAuthToken(acct, "android", null, this, null, null);
+		AccountManager accountMng = AccountManager.get(this);
+		Account[] accounts = accountMng.getAccountsByType("com.google");
+		Account account = accounts[0];
+		AccountManagerFuture<Bundle> accountManagerFuture = accountMng.getAuthToken(account, "android", null, this, null, null);
 		Bundle authTokenBundle = accountManagerFuture.getResult();
 		String authToken = authTokenBundle.get(AccountManager.KEY_AUTHTOKEN).toString();
 		return authToken;
